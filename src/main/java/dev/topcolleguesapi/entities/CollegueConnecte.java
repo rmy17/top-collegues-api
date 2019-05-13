@@ -4,21 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 
-@Entity
-public class CollegueParticipants {
+public class CollegueConnecte {
 
-	@Id
 	private String email;
-
 	private String nom;
 	private String prenom;
 	private String photoUrl;
-	private Integer points;
-
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles = new ArrayList<>();
 
@@ -65,6 +58,20 @@ public class CollegueParticipants {
 	}
 
 	/**
+	 * @return the roles
+	 */
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	/**
 	 * @return the photoUrl
 	 */
 	public String getPhotoUrl() {
@@ -78,31 +85,4 @@ public class CollegueParticipants {
 		this.photoUrl = photoUrl;
 	}
 
-	/**
-	 * @return the points
-	 */
-	public Integer getPoints() {
-		return points;
-	}
-
-	/**
-	 * @param points the points to set
-	 */
-	public void setPoints(Integer points) {
-		this.points = points;
-	}
-
-	/**
-	 * @return the roles
-	 */
-	public List<String> getRoles() {
-		return roles;
-	}
-
-	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
-	}
 }
