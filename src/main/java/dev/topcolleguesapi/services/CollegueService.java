@@ -1,9 +1,11 @@
 package dev.topcolleguesapi.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dev.topcolleguesapi.entities.CollegueParticipants;
 import dev.topcolleguesapi.exception.CollegueNonTrouveException;
@@ -11,8 +13,6 @@ import dev.topcolleguesapi.repository.CollegueParticipantRepo;
 
 @Service
 public class CollegueService {
-
-	CollegueParticipants collegueParticipants = new CollegueParticipants();
 
 	@Autowired
 	private CollegueParticipantRepo collegueParticipantRepo;
@@ -30,11 +30,23 @@ public class CollegueService {
 		}
 	}
 
-	public void mofdifierPoints(Boolean bool) {
-		if (bool == true) {
-			collegueParticipants.setPoints(collegueParticipants.getPoints() + 10);
+	@Transactional
+	public void modifierPoints(String email, Boolean bool) {
+		Optional<CollegueParticipants> collegueParticipants = collegueParticipantRepo.findById(email);
+		if (collegueParticipants.isPresent()) {
+			if (bool == true) {
+				collegueParticipants.get().setPoints(collegueParticipants.get().getPoints() + 10);
+			} else {
+				collegueParticipants.get().setPoints(collegueParticipants.get().getPoints() - 5);
+			}
 		} else {
-			collegueParticipants.setPoints(collegueParticipants.getPoints() - 5);
+			throw new CollegueNonTrouveException();
 		}
+	}
+
+	public CollegueParticipants recupCollegueActif(String email) {
+		CollegueParticipants CollegueTrouve = this.collegueParticipantRepo.findByEmail(email);
+
+		return CollegueTrouve;
 	}
 }

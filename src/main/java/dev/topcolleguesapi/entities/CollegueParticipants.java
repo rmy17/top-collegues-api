@@ -17,7 +17,7 @@ public class CollegueParticipants {
 	private String nom;
 	private String prenom;
 	private String photoUrl;
-	private Integer points;
+	private Integer points = 0;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles = new ArrayList<>();
